@@ -1,4 +1,4 @@
-![](sp2025-movie-idea/imgs/banner.png)
+![](imgs/banner.png)
 
 # EXTRA EXTRA READ ALL ABOUT IT!
 
@@ -22,7 +22,7 @@ Finding the movie plots for model training was the **MOST** enjoyable aspect of 
 
 Here's a fun word cloud we created from our data exploratory analysis using this dataset: 
 
-![](sp2025-movie-idea/imgs/wordcloud.png)  
+![](imgs/wordcloud.png)  
 
 The bulk of our training data came from [Kaggle: Wikipedia Movie Plots](https://www.kaggle.com/datasets/jrobischon/wikipedia-movie-plots). The description for this dataset: The dataset contains descriptions of 34,886 movies from around the world. The size and quality of this data was hard to beat and we highly recommend this source!
 
@@ -34,7 +34,7 @@ We wrote a custom **preprocess()** function that handles both the tokenization a
 
 Here is our model working and learning - just as we are!
 
-![](sp2025-movie-idea/imgs/training.png)
+![](imgs/training.png)
 
 ### Evaluation
 
@@ -46,13 +46,11 @@ With our best-performing config extracted from the ROUGE testing, we ran the mod
 
 Here was the result of the experiment:
 
-![](sp2025-movie-idea/imgs/cosine.png)
+![](imgs/cosine.png)
 
 ### DEMO
 
 Our fine-tuned model is hosted on hugging face for public use. We created a GUI using gradio and Hugging Face's Spaces hosting space. Here is the [link](https://huggingface.co/spaces/tdoucet2/movie-plot-generator) to the demo!
-
-
 
 
 ## Conclusion
