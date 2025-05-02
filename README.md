@@ -6,7 +6,7 @@
 
 ## Goals
   
-The project developers set out with a few very specific goals before attempting this feat.
+As developers, we set out with a few specific goals before attempting this feat.
 
  - Find the highest quality movie plots for testing, training, and validation.
  - Fine-tune a top-performing BART-based summarization model
