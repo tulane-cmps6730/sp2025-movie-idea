@@ -30,7 +30,7 @@ The bulk of our training data came from [Kaggle: Wikipedia Movie Plots](https://
 
 We went with [facebook/bart-large-cnn](https://huggingface.co/facebook/bart-large-cnn) due to it being one of the strongest out-of-the-box models for abstractive summarization. Since our project centers around generating creative plot summaries from imaginative titles, BART gave us the flexibility to fine-tune on structured prompt/plot pairs.
 
-We wrote a custom **preprocess()** function that handles both the tokenization and padding for the input titles and target plots. A cool addition we threw in was a custom **LogCallback** class that tracks training and evaluation logs at each step. On top of that, we added early stopping to avoid overfitting and enabled TensorBoard logging for more granular insights. Lastly, we calculated perplexity. You can never have enough metrics!
+We wrote a **preprocess()** function that handles both the tokenization and padding for the input titles and target plots. A cool addition we threw in was a custom **LogCallback** class that tracks training and evaluation logs at each step. On top of that, we added early stopping to avoid overfitting and enabled TensorBoard logging for more granular insights. Lastly, we calculated perplexity. You can never have enough metrics!
 
 Here is our model working and learning - just as we are!
 
