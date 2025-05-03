@@ -15,35 +15,35 @@ We approached this as a supervised learning problem, using a curated dataset of 
 
 ## Related Work
 
-I. AutoAD: Movie Description in Context​​
+### 1. AutoAD: Movie Description in Context
 
 One of the standout works, AutoAD, created a generative model that takes in movies and outputs them in text form. They did this by using CLIP, a vision-language model to extract multi-frame features, that is mapped to a transformer encoder into prompt vectors and GPT-2 to generate text conditioned on prior Audio Description (AD) context and subtitles. Their design is able to address the nature of descriptions against dialog, while leveraging some prompt-tuning adapters to fuse visual and textual signals.
 
-In our project, while we focus solely on text inputs, AutoAD’s core idea of conditioning on both past outputs and external context informs our approach. We similarly concatenate previously generated summaries with title‑prompt embeddings before invoking BART‑Large‑CNN, which mirrors their recurrent inference loop for narrative coherence. Although our implementation does not process raw frames or audio, the conceptual layering of context and the emphasis on staged model adaptation guided our trainer setup, early‑stopping criteria, and logging callback design.
+In our project, while we focus solely on text inputs, AutoAD’s core idea of conditioning on both past outputs and external context informs our approach. We similarly concatenate previously generated summaries with title‑prompt embeddings before invoking BART‑Large‑CNN, which mirrors their recurrent inference loop for narrative coherence. Although our implementation does not process raw frames or audio, the conceptual layering of context and the emphasis on staged model adaptation guided our trainer setup.
 
-II. ScreenWriter: Zero‑Shot Screenplay Generation
+### 2. ScreenWriter: Zero‑Shot Screenplay Generation
 
-Similar to AutoAD, Mahon and Lapata et al. introduce ScreenWriter, which is a framework that ingests raw video and outputs structured screenplays—scene segmentation, speaker roles, dialogue, and visual descriptions—without any script input. Once scenes are detected, ScreenWriter is able to assign character identities by matching diarized face embeddings to an external actor database. For hierarchical summarization, they are able to employ a two‑level transformer: a scene‑level summariser and a global aggregator.
+Similar to AutoAD, Mahon and Lapata et al. introduce ScreenWriter, which is a framework that ingests raw video and outputs structured screenplays—scene segmentation, speaker roles, dialogue, and visual descriptions—without any script input. Once scenes are detected, ScreenWriter is able to assign character identities by matching diarized face embeddings to an external actor database. For hierarchical summarization, they are able to employ a two‑level transformer: a scene‑level summarizer and a global aggregator.
 
 Although our pipeline ingests only textual data, ScreenWriter’s emphasis on modular segmentation and hierarchical summarization resonates strongly with our design. Their two‑level summarizer inspired our split of a light preprocessing stage followed by the fine‑tuned BART summarizer. 
 
-III. Movie Plot Analysis via Turning Point Identification
+### 3. Movie Plot Analysis via Turning Point Identification
 
 More aligned with our project, Papalampidi et al. (2019) and the group are able to use Turning Point (TP) Identification as a computational task. They defined five turning points within a plot: Opportunity, Change of Plans, Point of No Return, Major Setback, Climax. They use these definitions across 99 scripts and project these labels onto full screenplays using BiLSTM‑encoded synopsis context, a synopsis encoder for contextualizing word representations. Their neural segmentation model (CAM, TAM) encodes scene and synopsis features with attention mechanisms to classify each scene’s TP label.
 
-We borrow some of their high‑level insight when we considered the summarization and retrival, as we still wanted to prioritize creativity. While we don’t reproduce their BiLSTM classifier, their conceptual mapping of “where the story turns” fed us inspiration.
+We borrow some of their high‑level insight when we considered the summarization and retrieval, as we still wanted to prioritize creativity. While we don’t reproduce their BiLSTM classifier, their conceptual mapping of “where the story turns” fed us inspiration.
 
-IV. Two-Stage Movie Script Summarization: An Efficient Method For Low-Resource Long Document Summarization
+### 4. Two-Stage Movie Script Summarization
 
-Even more in relation to our model, Liu and Hong et al. (2022) propose a two‑stage summarization to handle extremely long movie scripts (about 24 K tokens). Stage 1 regex‑parse “action” lines and include initial dialogues upon character introduction, compressing scripts to about 8 K tokens. Their Stage 2 uses fine tuning on a Longformer‑Encoder‑Decoder (LED) with parameter‑efficient methods (BitFit and NoisyTune) on the compressed inputs, creating a balance between context coverage and compute efficiency.
+Even more in relation to our model, Liu and Hong et al. (2022) propose a two‑stage summarization to handle extremely long movie scripts (about 24 K tokens). Stage 1 regex‑parses “action” lines and includes initial dialogues upon character introduction, compressing scripts to about 8 K tokens. Their Stage 2 uses fine tuning on a Longformer‑Encoder‑Decoder (LED) with parameter‑efficient methods (BitFit and NoisyTune) on the compressed inputs, creating a balance between context coverage and compute efficiency.
 
-Although we fine‑tune a BART model rather than LED, the principle of staged reduction plus efficient parameter updates is shared, as it is reflected in our choice of learning_rate, early‑stopping, and limited fine‑tuning epochs.
+Although we fine‑tune a BART model rather than LED, the principle of staged reduction plus efficient parameter updates is shared, as it is reflected in our choice of learning rate, early‑stopping, and limited fine‑tuning epochs.
 
-V. MovieSum: An Abstractive Summarization Dataset for Movie Screenplays
+### 5. MovieSum: An Abstractive Summarization Dataset
 
-Lastly, MovieSum is a large‑scale benchmark of 2,200 manually formatted screenplays paired with Wikipedia plot summaries, which was introduced by Saxena & Keller (2024). They preserve screenplay structure via Celtx XML, enabling models to attend to scene headings, character cues, and action lines. 
+Lastly, MovieSum is a large‑scale benchmark of 2,200 manually formatted screenplays paired with Wikipedia plot summaries, which was introduced by Saxena & Keller (2024). They preserve screenplay structure via Celtx XML, enabling models to attend to scene headings, character cues, and action lines.
 
-MovieSum’s metadata, such as IMDb IDs, genre labels, release years, help guide us in the right direction to define a genre-balanced sample ot evaluate our cosign similarity when testing our model.
+MovieSum’s metadata, such as IMDb IDs, genre labels, and release years, helped guide us in the right direction to define a genre-balanced sample to evaluate our cosine similarity during testing.
 
 ## Approach
 
