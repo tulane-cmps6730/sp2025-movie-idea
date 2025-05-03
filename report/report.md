@@ -115,13 +115,13 @@ $$
 
 The table below shows the top 5 decoding configurations, sorted by ROUGE-L F1 score: 
 
-| Index | Temperature | Min Length | Max Length | Top-k | Top-p | No-repeat N-gram Size | ROUGE-L F1 |
-|-------|-------------|------------|------------|-------|-------|------------------------|------------|
-| 0     | 0.50        | 40         | 80         | 50    | 0.95  | 3                      | 0.164267   |
-| 5     | 0.01        | 40         | 80         | 0     | 0.80  | 2                      | 0.156882   |
-| 1     | 0.80        | 50         | 60         | 0     | 0.80  | 2                      | 0.144175   |
-| 4     | 0.80        | 50         | 60         | 50    | 0.95  | 2                      | 0.144095   |
-| 3     | 0.80        | 40         | 80         | 0     | 0.95  | 3                      | 0.138910   |
+| Temp. | Min | Max | Top-k | Top-p | N-Gram | R-L F1 |
+|-------|------------|------------|-------|-------|------------|-------------|
+| 0.50  | 40         | 80         | 50    | 0.95  | 3          | 0.164267    |
+| 0.01  | 40         | 80         | 0     | 0.80  | 2          | 0.156882    |
+| 0.80  | 50         | 60         | 0     | 0.80  | 2          | 0.144175    |
+| 0.80  | 50         | 60         | 50    | 0.95  | 2          | 0.144095    |
+| 0.80  | 40         | 80         | 0     | 0.95  | 3          | 0.138910    |
 
 The results were exported to `random_search_rouge_baseline.xlsx` for reference. The best-performing config (temperature=0.5, min_length=40, max_length=80, top-k=50, top-p=0.95, no-repeat n-gram=3) was used in the downstream evaluations.
 
